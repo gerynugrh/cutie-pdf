@@ -21,4 +21,9 @@ public class ImageContent implements Content {
     PDImageXObject pdImage = PDImageXObject.createFromFile(contentPath, context);
     contentStream.drawImage(pdImage, 0, 0, PDRectangle.A4.getWidth(), PDRectangle.A4.getHeight());
   }
+
+  @Override
+  public String toString() {
+    return contentPath;
+  }
 }

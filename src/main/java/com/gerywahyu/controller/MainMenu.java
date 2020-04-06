@@ -1,10 +1,12 @@
 package com.gerywahyu.controller;
 
+import com.gerywahyu.model.Content;
 import com.gerywahyu.model.PDFContents;
 import com.gerywahyu.model.PDFMerger;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
 
@@ -15,9 +17,20 @@ public class MainMenu {
   private Button addFileButton;
 
   @FXML
+  private Button clearAllButton;
+
+  @FXML
   private Button saveFileButton;
 
+  @FXML
+  private ListView<Content> addedFiles;
+
   private PDFContents pdfContents = new PDFContents();
+
+  @FXML
+  public void initialize() {
+    addedFiles.setItems(pdfContents.getContents());
+  }
 
   @FXML
   void handleAddFileButton() {
@@ -27,8 +40,13 @@ public class MainMenu {
   }
 
   @FXML
+  void handleClearAllButton() {
+    pdfContents.removeAllContents();
+  }
+
+  @FXML
   void handleSaveFileButton() {
-    Window owner = addFileButton.getScene().getWindow();
+    Window owner = saveFileButton.getScene().getWindow();
     FileChooser fileChooser = new FileChooser();
     File file = fileChooser.showSaveDialog(owner);
 

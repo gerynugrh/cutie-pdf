@@ -17,9 +17,9 @@ public class Main extends Application {
   public void start(Stage primaryStage) throws Exception {
     URL url = getClass().getResource("MainMenu.fxml");
     Parent root = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
-    primaryStage.setTitle("Convert To PDF");
-    primaryStage.setScene(new Scene(root, 300, 200));
-    primaryStage.setResizable(false);
+    primaryStage.setTitle("Cutie PDF");
+    primaryStage.setScene(new Scene(root, 600, 400));
+    primaryStage.setResizable(true);
     primaryStage.show();
   }
 }
