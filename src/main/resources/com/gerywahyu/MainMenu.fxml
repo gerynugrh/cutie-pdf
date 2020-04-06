@@ -20,4 +20,13 @@
             <Insets top="10" bottom="10"/>
         </GridPane.margin>
     </Button>
+
+    <Button fx:id="saveFileButton" defaultButton="true"
+            text="Save" prefWidth="100" prefHeight="30"
+            GridPane.columnIndex="1" GridPane.rowIndex="0"
+            GridPane.halignment="RIGHT" onAction="#handleSaveFileButton">
+        <GridPane.margin>
+            <Insets top="10" bottom="10"/>
+        </GridPane.margin>
+    </Button>
 </GridPane>
