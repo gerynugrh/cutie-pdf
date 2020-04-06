@@ -4,29 +4,39 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.*?>
 
-<GridPane
-        xmlns="http://javafx.com/javafx/8.0.232" xmlns:fx="http://javafx.com/fxml/1"
-        fx:controller="com.gerywahyu.controller.MainMenu"
-        alignment="center"
-        hgap="10"
-        vgap="10">
-    <padding><Insets top="40" left="40" right="40" bottom="40"/></padding>
+<?import javafx.scene.control.ListView?>
+<GridPane xmlns="http://javafx.com/javafx/8.0.232" xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="com.gerywahyu.controller.MainMenu" alignment="center"
+        hgap="10" vgap="10" maxWidth="Infinity" prefWidth="Infinity">
+    <padding><Insets bottom="10"/></padding>
 
-    <Button fx:id="addFileButton" defaultButton="true"
-            text="Add File" prefWidth="100" prefHeight="30"
+    <ListView fx:id="addedFiles" maxWidth="Infinity" prefWidth="Infinity"
             GridPane.columnIndex="0" GridPane.rowIndex="0"
-            GridPane.halignment="RIGHT" onAction="#handleAddFileButton">
+            GridPane.columnSpan="2" GridPane.halignment="RIGHT">
+    </ListView>
+
+    <HBox   GridPane.columnIndex="0" GridPane.rowIndex="1"
+            GridPane.halignment="RIGHT">
+        <Button fx:id="addFileButton" text="+"
+                prefHeight="30" onAction="#handleAddFileButton">
+            <HBox.margin><Insets right="5" left="5"/></HBox.margin>
+        </Button>
+        <Button text="Clear All" prefHeight="30"
+                onAction="#handleClearAllButton">
+        </Button>
         <GridPane.margin>
-            <Insets top="10" bottom="10"/>
+            <Insets top="10" bottom="10" left="20" />
         </GridPane.margin>
-    </Button>
+    </HBox>
+
+
 
     <Button fx:id="saveFileButton" defaultButton="true"
             text="Save" prefWidth="100" prefHeight="30"
-            GridPane.columnIndex="1" GridPane.rowIndex="0"
+            GridPane.columnIndex="1" GridPane.rowIndex="1"
             GridPane.halignment="RIGHT" onAction="#handleSaveFileButton">
         <GridPane.margin>
-            <Insets top="10" bottom="10"/>
+            <Insets top="10" bottom="10" right="20" />
         </GridPane.margin>
     </Button>
 </GridPane>

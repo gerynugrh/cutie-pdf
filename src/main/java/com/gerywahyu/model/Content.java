@@ -5,6 +5,7 @@ import org.apache.pdfbox.pdmodel.PDPageContentStream;
 
 import java.io.IOException;
 
-interface Content {
+public interface Content {
   void drawContent(PDDocument context, PDPageContentStream contentStream) throws IOException;
+  String toString();
 }
