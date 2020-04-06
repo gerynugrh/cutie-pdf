@@ -2,6 +2,10 @@ plugins {
     id 'java'
 }
 
+apply plugin: 'application'
+
+mainClassName = 'com.gerywahyu.Main'
+
 group 'org.example'
 version '1.0-SNAPSHOT'
 
