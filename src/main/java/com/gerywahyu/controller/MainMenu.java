@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ProgressBar;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
 
@@ -23,6 +24,9 @@ public class MainMenu {
   private Button saveFileButton;
 
   @FXML
+  private ProgressBar progressBar;
+
+  @FXML
   private ListView<Content> addedFiles;
 
   private PDFContents pdfContents = new PDFContents();
@@ -30,6 +34,7 @@ public class MainMenu {
   @FXML
   public void initialize() {
     addedFiles.setItems(pdfContents.getContents());
+    progressBar.setProgress(0);
   }
 
   @FXML
@@ -41,6 +46,7 @@ public class MainMenu {
 
   @FXML
   void handleClearAllButton() {
+    progressBar.setProgress(0);
     pdfContents.removeAllContents();
   }
 
@@ -51,15 +57,15 @@ public class MainMenu {
     File file = fileChooser.showSaveDialog(owner);
 
     PDFMerger pdfMerger = new PDFMerger(pdfContents);
-
-    pdfMerger.save(file, () -> {
+    pdfMerger.setOnSuccessCallback(() -> {
       Alert alert = new Alert(Alert.AlertType.INFORMATION);
       alert.setTitle("Merger Response");
       alert.setHeaderText("Success");
       alert.setContentText("Converting and Merging is successful");
 
       alert.showAndWait();
-    }, ex -> {
+    });
+    pdfMerger.setOnErrorCallback(ex -> {
       Alert alert = new Alert(Alert.AlertType.ERROR);
       alert.setTitle("Merger Response");
       alert.setHeaderText("Error");
@@ -67,5 +73,10 @@ public class MainMenu {
 
       alert.showAndWait();
     });
+    pdfMerger.setOnProgressCallback(progress -> {
+      progressBar.setProgress(progress);
+    });
+    progressBar.setProgress(0);
+    pdfMerger.save(file);
   }
 }
