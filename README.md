@@ -12,4 +12,4 @@ to a website just to convert and merge it into pdf, **FIN**.
 
 `./gradlew run`
 
-![Cutie PDF in action](/example/front.png)
+![Cutie PDF in action](/example/cutiepdf-1.1.0.gif)

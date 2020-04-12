@@ -10,12 +10,15 @@ import java.io.IOException;
 
 public class PDFMerger {
   private PDFContents contents;
+  private OnProgressCallback onProgressCallback;
+  private OnSuccessCallback onSuccessCallback;
+  private OnErrorCallback onErrorCallback;
 
   public PDFMerger(PDFContents contents) {
     this.contents = contents;
   }
 
-  public void save(File file, OnSuccessCallback successCallback, OnErrorCallback errorCallback) {
+  public void save(File file) {
     new Thread(() -> {
       try {
         PDDocument doc = new PDDocument();
@@ -23,15 +26,31 @@ public class PDFMerger {
           PDPage page = new PDPage(PDRectangle.A4);
           contents.addContentToPage(doc, page, i);
           doc.addPage(page);
+
+          final float progress = (float) i / contents.getLength();
+          Platform.runLater(() -> onProgressCallback.onProgress(progress));
         }
         doc.save(file);
         doc.close();
 
-        Platform.runLater(successCallback::onSuccess);
+        Platform.runLater(() -> onProgressCallback.onProgress(1.0F));
+        Platform.runLater(onSuccessCallback::onSuccess);
       } catch (Exception ex) {
-        Platform.runLater(() -> errorCallback.onError(ex));
+        Platform.runLater(() -> onErrorCallback.onError(ex));
       }
     }).start();
+  }
+
+  public void setOnErrorCallback(OnErrorCallback onErrorCallback) {
+    this.onErrorCallback = onErrorCallback;
+  }
+
+  public void setOnSuccessCallback(OnSuccessCallback onSuccessCallback) {
+    this.onSuccessCallback = onSuccessCallback;
+  }
+
+  public void setOnProgressCallback(OnProgressCallback onProgressCallback) {
+    this.onProgressCallback = onProgressCallback;
   }
 
   public interface OnSuccessCallback {
@@ -40,5 +59,9 @@ public class PDFMerger {
 
   public interface OnErrorCallback {
     void onError(Exception ex);
+  }
+
+  public interface OnProgressCallback {
+    void onProgress(float progress);
   }
 }
